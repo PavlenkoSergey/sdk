@@ -2,7 +2,6 @@
     <label class="checkbox">
         <input class="checkbox__input"
                type="checkbox"
-               value="1"
                :checked="value"
                @change="$emit('change')">
         <span class="checkbox__checkmark"></span>
@@ -26,7 +25,6 @@
         height: 18px;
         width: 18px;
         margin-right: 15px;
-        /*margin-bottom: 12px;*/
         cursor: pointer;
         font-size: 22px;
         -webkit-user-select: none;
@@ -84,7 +82,12 @@
         &:hover {
             .checkbox__input:not(:checked) {
                 ~ .checkbox__checkmark {
-                    background-color: $primary-color;
+                    @media (min-width: 769px) {
+                        background-color: $primary-color;
+                        &:after {
+                            display: block;
+                        }
+                    }
                 }
             }
         }

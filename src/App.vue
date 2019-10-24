@@ -3,7 +3,8 @@
         <div class="container container--flex container--content">
             <div class="column column--small">
                 <StatsBlock/>
-                <Button v-show="!todoEmpty" variant="link" color="danger" @click="clearCompleted">Clear completed</Button>
+                <Button :disabled="todoEmpty" variant="link" color="danger" @click="clearCompleted">Clear completed
+                </Button>
             </div>
             <div class="column column--large">
                 <InputBlock/>
@@ -11,7 +12,7 @@
             </div>
             <div class="column column--small">
                 <ProgressBlock/>
-                <Button v-show="!todoEmpty" variant="link" color="primary" @click="completedAll">Complete all</Button>
+                <Button :disabled="todoEmpty" variant="link" color="primary" @click="completedAll">Complete all</Button>
             </div>
         </div>
         <div class="footer">
@@ -81,6 +82,7 @@
 				}
 			},
 			clearCompleted () {
+				console.log(123)
 				this.$store.commit('clearCompleted')
 			},
 			completedAll () {
@@ -110,6 +112,10 @@
 <style lang="scss">
     @import "./assets/scss/main";
 
+    * {
+        box-sizing: border-box;
+    }
+
     #app {
         font-family: 'Avenir', Helvetica, Arial, sans-serif;
         -webkit-font-smoothing: antialiased;
@@ -127,8 +133,6 @@
         width: 100%;
         margin-right: auto;
         margin-left: auto;
-        padding-right: 15px;
-        padding-left: 15px;
 
         &--flex {
             display: flex;
@@ -136,6 +140,7 @@
                 flex-wrap: wrap;
             }
         }
+
         &--content {
             margin-bottom: 75px;
         }
@@ -145,18 +150,20 @@
         display: flex;
         flex-direction: column;
         align-items: center;
-        padding:  0 15px;
+        padding: 0 15px;
+
         &--small {
             width: 20%;
             @media (max-width: 768px) {
-                width: calc(50% - 30px);
+                width: 50%;
             }
         }
+
         &--large {
             width: 80%;
             @media (max-width: 768px) {
                 width: 100%;
-                margin-top: 30px;
+                margin-top: 10px;
                 order: 3
             }
         }
@@ -167,5 +174,13 @@
         position: fixed;
         bottom: 0;
         background-color: #ffffff;
+        box-shadow: 0 -20px 10px #ffffff;
+    }
+
+    @media (max-width: 768px) {
+        .btn--link {
+            padding-top: 20px;
+            margin-top: auto;
+        }
     }
 </style>

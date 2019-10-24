@@ -24,16 +24,24 @@
     @import "../assets/scss/mixins";
 
     .statsTable {
+        width: 100%;
+
         &__header {
             @include blockHeader;
         }
+
         &__table {
             tr {
                 border: 1px solid $disables-color;
             }
+
             th {
                 padding-right: 20px;
                 text-align: left;
+            }
+
+            td {
+                min-width: 30px;
             }
         }
     }

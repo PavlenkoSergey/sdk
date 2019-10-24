@@ -11,7 +11,7 @@
             <label for="text" class="inputBlock__label">{{placeholderText}}</label>
             <span class="inputBlock__inputBorder"></span>
         </div>
-        <Button @click="add" color="primary">Add to list</Button>
+        <Button @click="add" color="primary">{{buttonText}}</Button>
     </div>
 </template>
 
@@ -31,12 +31,22 @@
 		},
 		methods: {
 			add () {
-				if (this.value) {
+				if (this.value && !this.onlySpaces) {
 					this.$store.commit('add', { text: this.value });
 					this.value = '';
 				}
 
+				if (this.onlySpaces) this.value = '';
+
 				this.$refs.input.focus();
+			},
+		},
+		computed: {
+			onlySpaces () {
+				return !this.value.replace(/\s/g, '').length
+			},
+			buttonText () {
+				return document.documentElement.clientWidth < 768 ? '+' : 'Add to list'
 			}
 		}
 	}
@@ -49,10 +59,7 @@
         align-items: flex-start;
         flex-wrap: nowrap;
         @media (max-width: 768px) {
-            flex-wrap: wrap;
-
             .btn {
-                margin-top: 20px;
                 margin-left: auto;
             }
         }

@@ -10,7 +10,7 @@ export default new Vuex.Store({
 	},
 	mutations: {
 		add (state, payload) {
-			state.todoList.push(
+			state.todoList.unshift(
 					{
 						id: `f${(+new Date).toString(16)}`,
 						text: payload.text,
@@ -48,12 +48,9 @@ export default new Vuex.Store({
 		},
 		completedAll (state) {
 			state.todoList.forEach(item => {
-					item.done = true
+				item.done = true
 			})
-		},
-		pull (state, payload) {
-			state.todoList = payload.todoList
-		},
+		}
 	},
 	getters: {
 		doneTodos: state => {

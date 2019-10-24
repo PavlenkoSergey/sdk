@@ -1,5 +1,6 @@
 <template>
-    <button class="btn" :class="`${buttonTypeClass} ${buttonColorClass}`" type="button" @click="$emit('click')">
+    <button class="btn" :disabled="disabled" :class="`${buttonTypeClass} ${buttonColorClass}`" type="button"
+            @click="click">
         <slot/>
     </button>
 </template>
@@ -9,7 +10,8 @@
 		name: "Button",
 		props: {
 			variant: String,
-			color: String
+			color: String,
+			disabled: false
 		},
 		computed: {
 			buttonTypeClass () {
@@ -19,6 +21,11 @@
 				return { primary: 'btn--primary', danger: 'btn--danger' }[this.color] || '';
 			}
 		},
+		methods: {
+			click () {
+				if (!this.disabled) this.$emit('click')
+			}
+		}
 	}
 </script>
 
@@ -31,6 +38,11 @@
         transition: 0.3s;
         white-space: nowrap;
         flex-shrink: 0;
+
+        &[disabled="disabled"] {
+            color: $disables-color !important;
+            cursor: auto;
+        }
 
         &:not(.btn--link) {
             border: 1px solid transparent;
@@ -47,6 +59,7 @@
             &:hover {
                 color: lighten($primary-color, 10);
             }
+
             &:not(.btn--link) {
                 color: $text-color-invert;
                 background-color: $primary-color;
@@ -64,6 +77,7 @@
 
         &--danger {
             color: $danger-color;
+
             &:hover {
                 color: lighten($danger-color, 10);
             }

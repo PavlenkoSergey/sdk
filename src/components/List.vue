@@ -24,15 +24,18 @@
 <style lang="scss">
     .list {
         width: 100%;
-        margin: 20px 0;
+        margin: 10px 0;
     }
+
     .list-enter-active, .list-leave-active {
         transition: all .4s;
     }
+
     .list-enter {
         opacity: 0;
-        transform: translateY(10px);
+        transform: translateY(-30px);
     }
+
     .list-leave-to {
         opacity: 0;
         transform: translateY(-5px);

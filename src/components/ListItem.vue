@@ -1,7 +1,12 @@
 <template>
     <div class="listItem" :class="{'listItem--done': itemData.done}">
         <Checkbox :value="itemData.done" @change="changeStatus"/>
-        <div class="listItem__text" contenteditable="false" ref="text" @keypress.enter="save">{{itemData.text}}</div>
+        <div class="listItem__text"
+             contenteditable="false"
+             ref="text"
+             @keypress.enter="save"
+             @click="changeStatus">{{itemData.text}}
+        </div>
         <div class="listItem__buttonContainer">
             <div class="listItem__button listItem__button--edit" v-if="!editing" @click="edit">
                 <EditIcon/>
@@ -71,11 +76,13 @@
 				this.$store.commit('deleteItem', { id: this.itemData.id })
 			},
 			changeStatus () {
-				this.$store.commit('change', {
-					id: this.itemData.id,
-					property: 'done',
-					value: !this.itemData.done
-				});
+				if (!this.editing) {
+					this.$store.commit('change', {
+						id: this.itemData.id,
+						property: 'done',
+						value: !this.itemData.done
+					});
+				}
 			}
 		},
 	}
@@ -104,6 +111,10 @@
 
         &__text {
             outline: none;
+
+            &[contenteditable="false"] {
+                cursor: pointer;
+            }
         }
 
         &__buttonContainer {
